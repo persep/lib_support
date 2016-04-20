@@ -1,3 +1,5 @@
+require 'unicode'
+
 class String
   def to_tag
     strip.mb_chars.downcase.to_s.gsub(/\s+/, '_').gsub(/\P{Word}/, '')
