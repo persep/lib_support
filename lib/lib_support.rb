@@ -7,7 +7,7 @@ require 'object'
 require 'symbol_serializer'
 require 'date'
 require 'hash_serializer'
-require 'string'
+#require 'string'
 require 'time'
 
 module LibSupport
