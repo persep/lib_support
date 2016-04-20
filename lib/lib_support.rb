@@ -1,1 +1,1 @@
-require "lib_support"
+require "lib_support/*"
