@@ -12,4 +12,3 @@ require 'time'
 
 module LibSupport
 end
-
