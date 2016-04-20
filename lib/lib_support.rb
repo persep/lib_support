@@ -1,1 +1,1 @@
-require "lib_support/*"
+Dir.glob('lib_support/*', &method(:require))
