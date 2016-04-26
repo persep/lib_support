@@ -6,8 +6,8 @@ require 'version'
 Gem::Specification.new do |spec|
   spec.name          = 'lib_support'
   spec.version       = LibSupport::VERSION
-  spec.authors       = ["yamax2"]
-  spec.email         = ["max@tretyakov-ma.ru"]
+  spec.authors       = ['yamax2']
+  spec.email         = ['max@tretyakov-ma.ru']
   spec.license       = 'MIT'
 
   spec.summary       = 'LibSupport'
