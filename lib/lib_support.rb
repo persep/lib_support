@@ -8,8 +8,8 @@ require 'date'
 require 'hash_serializer'
 require 'string'
 require 'time'
-require 'version'
 require 'mapper'
+require 'version'
 
 module LibSupport
   autoload :BaseObject,              'base_object'
