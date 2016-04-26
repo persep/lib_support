@@ -12,6 +12,11 @@ require 'mapper'
 require 'version'
 
 module LibSupport
+  module Rails
+    class Engine < ::Rails::Engine
+
+    end
+  end
 end
 
 require 'refs_controller'
