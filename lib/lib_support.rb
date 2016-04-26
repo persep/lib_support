@@ -12,7 +12,8 @@ require 'mapper'
 require 'version'
 
 module LibSupport
-  autoload :BaseObject,              'base_object'
-  autoload :RefsController,          'refs_controller'
-  autoload :RefsControllerGenerator, 'generators/refs_controller/refs_controller_generator'
 end
+
+require 'refs_controller'
+require 'base_object'
+require 'generators/refs_controller/refs_controller_generator'
