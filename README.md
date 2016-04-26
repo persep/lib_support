@@ -1,6 +1,6 @@
 # LibSupport
 
-simple list models
+simple list of models
 
 requires:
 
@@ -9,9 +9,11 @@ requires:
 
 # How to cook it
 
+as an example I used standard app containing model Posts
+
 ## migrations
 
-first, you should create base object table
+create base object table
 ```ruby
 class DeviseCreateUsers < ActiveRecord::Migration[5.0]
   def change
@@ -19,11 +21,26 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
     ...
 ```    
 
-then table for model with indexed_columns
+create a table for Posts
 ```ruby
-    object_ref_create(:users, :indexed_columns => [:email, :name]) do |t|
+    object_ref_create(:users, :indexed_columns => [:title, :descr]) do |t|
       t.string :name, :limit => 255, :null => false, index: true
 ````      
+
+table 'posts' is inherited from table 'objects', so you can search among objects:
+```sql
+select * from objects where txt_index @@ plainto_tsquery(unaccent($$test$$))
+```
+
+## models
+
+our model Post should include module BaseObject
+```ruby
+class Post < ApplicationRecord
+  include LibSupport::BaseObject
+  ...
+```
+
 
 
 # TODO
