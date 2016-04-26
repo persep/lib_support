@@ -10,12 +10,7 @@ require 'string'
 require 'time'
 require 'mapper'
 require 'version'
-
-module LibSupport
-  class Engine < ::Rails::Engine
-  end
-end
-
 require 'refs_controller'
 require 'base_object'
 require 'generators/refs_controller/refs_controller_generator'
+require 'engine'
