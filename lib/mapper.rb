@@ -18,7 +18,7 @@ class ActionDispatch::Routing::Mapper
       end
 
       opts[:only] = opts[:only] - [:remove, :index_items]
-      resources resource, opts
+      resources resource, opts.merge(:param => res.id_column)
     end
 
     resource_scope(:resources, Resource.new(resources.pop, options)) { yield } if block_given?

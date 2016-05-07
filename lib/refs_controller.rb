@@ -25,7 +25,7 @@ module LibSupport::RefsController
     @page = params[:page].to_i
     @page = 1 if @page < 1
 
-    @items = resource.permitted_for(permission_params).order("#{resource.table_name}.id desc").page(@page)
+    @items = resource.permitted_for(permission_params).order("#{resource.table_name}.#{id_column.to_s} desc").page(@page)
   end
 
   def new
@@ -45,9 +45,9 @@ module LibSupport::RefsController
 
   def remove
     par = "#{resource.sm_name}_remove_ids".to_sym
-    list = resource.where(:id => params[par].to_s.split(',').map(&:to_i))
+    list = resource.where(id_column => params[par].to_s.split(','))
 
-    ids = list.map(&:get_id)
+    ids = list.map{|x| x.send(id_column) }
     render json: { :remove_list => [remove_error_msg(list)] }, status: :forbidden and return unless permit_remove_objects?(list)
 
     resource.transaction do
@@ -66,7 +66,7 @@ module LibSupport::RefsController
   end
 
   def show
-    @item = resource.find_by_id(params[:id])
+    @item = resource.find_by(id_column => params[id_column])
 
     respond_to do |format|
       format.js do
@@ -79,7 +79,7 @@ module LibSupport::RefsController
   end
 
   def update
-    @item = resource.find_by_id(params[:id]) unless @item
+    @item = resource.find_by(id_column => params[id_column]) unless @item
     return unless check_modify_permissions
 
     after_change 'show', update_resource(resource_params)
@@ -126,6 +126,14 @@ module LibSupport::RefsController
 
   def create_resource(params)
     resource.new(resource.default_values)
+  end
+
+  def self.id_column
+    ref_options[:id_column] || :id
+  end
+
+  def id_column
+    self.class.id_column
   end
 
   def self.included(base)
