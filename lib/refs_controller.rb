@@ -7,6 +7,10 @@ module LibSupport::RefsController
     def resource_type(val)
       self.resource = val
     end
+
+    def id_column
+      self.ref_options[:id_column] || :id
+    end
   end
 
   def create
@@ -15,6 +19,10 @@ module LibSupport::RefsController
 
     return unless check_modify_permissions
     after_change 'new', update_resource(par)
+  end
+
+  def id_column
+    self.class.id_column
   end
 
   def index
@@ -126,14 +134,6 @@ module LibSupport::RefsController
 
   def create_resource(params)
     resource.new(resource.default_values)
-  end
-
-  def self.id_column
-    ref_options[:id_column] || :id
-  end
-
-  def id_column
-    self.class.id_column
   end
 
   def self.included(base)
