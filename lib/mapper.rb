@@ -21,7 +21,8 @@ class ActionDispatch::Routing::Mapper
       resources resource, opts.merge(:param => res.id_column)
     end
 
-    resource_scope(:resources, Resource.new(resources.pop, options)) { yield } if block_given?
+    #Resource.new(resources.pop, options)
+    resource_scope(:resources) { yield } if block_given?
 
     self
   end
