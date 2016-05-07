@@ -62,7 +62,7 @@ module LibSupport::BaseObject
   end
 
   def get_id
-    :id
+    send self.class.id_column
   end
 
   # value to html value
