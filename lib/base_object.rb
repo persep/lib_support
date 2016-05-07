@@ -8,9 +8,9 @@ module LibSupport::BaseObject
     end
 
     # full text search
-    def find_object(txt, params = {})
+    def find_object(txt, *opts)
       text = txt.strip
-      where(params).where("txt_index @@ plainto_tsquery(unaccent($$#{text}$$))").order("ts_rank(txt_index, plainto_tsquery($$#{text}$$)) desc, name <-> $$#{text}$$")
+      permitted_for(*opts).where("txt_index @@ plainto_tsquery(unaccent($$#{text}$$))").order("ts_rank(txt_index, plainto_tsquery($$#{text}$$)) desc, name <-> $$#{text}$$")
     end
 
     def form_columns
