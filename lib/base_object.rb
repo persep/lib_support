@@ -53,6 +53,10 @@ module LibSupport::BaseObject
     base.extend(ClassMethods)
   end
 
+  def get_id
+    send(id_column)
+  end
+
   # value to html value
   def ref_column_value(name)
     send(name).to_s.html_safe
