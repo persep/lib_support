@@ -1,7 +1,7 @@
 module LibSupport::RefsController
   module ClassMethods
     def ref_options_set(val)
-      self.ref_options.merge!(val)
+      self.ref_options = self.ref_options.merge(val)
     end
 
     def resource_type(val)
