@@ -17,6 +17,10 @@ module LibSupport::BaseObject
       @form_columns || ref_columns
     end
 
+    def id_column
+      @id_column || :id
+    end
+
     def permitted_for(*opts)
       all
     end
@@ -44,6 +48,10 @@ module LibSupport::BaseObject
       @form_columns = list.to_a
     end
 
+    def set_id_column(value)
+      @id_column = value
+    end
+
     def set_ref_columns(*list)
       @ref_columns = list.to_a
     end
@@ -54,7 +62,7 @@ module LibSupport::BaseObject
   end
 
   def get_id
-    send(id_column)
+    :id
   end
 
   # value to html value

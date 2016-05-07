@@ -9,7 +9,7 @@ module LibSupport::RefsController
     end
 
     def id_column
-      self.ref_options[:id_column] || :id
+      self.resource.id_column
     end
   end
 
