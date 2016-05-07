@@ -22,7 +22,7 @@ class ActionDispatch::Routing::Mapper
     end
 
     #Resource.new(resources.pop, options)
-    resource_scope(:resources) { yield } if block_given?
+    resource_scope(resources) { yield } if block_given?
 
     self
   end
