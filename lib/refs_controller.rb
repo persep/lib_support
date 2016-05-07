@@ -1,7 +1,7 @@
 module LibSupport::RefsController
   module ClassMethods
     def ref_options_set(val)
-      self.ref_options = self.ref_options.merge(val)
+      self.ref_options.merge!(val)
     end
 
     def resource_type(val)
@@ -15,7 +15,7 @@ module LibSupport::RefsController
 
   def create
     par = resource_params
-    @item = create_resource(par) unless @item
+    @item ||= create_resource(par)
 
     return unless check_modify_permissions
     after_change 'new', update_resource(par)
