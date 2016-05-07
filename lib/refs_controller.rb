@@ -13,15 +13,7 @@ module LibSupport::RefsController
     par = resource_params
     @item = create_resource(par) unless @item
 
-    unless permit_modify_object?(@item)
-      respond_to do |format|
-        format.json { render nothing: true, status: :forbidden }
-        format.html { redirect_to(:action => 'index') }
-      end
-
-      return
-    end
-
+    return unless check_modify_permissions
     after_change 'new', update_resource(par)
   end
 
@@ -39,6 +31,7 @@ module LibSupport::RefsController
   def new
     @item = resource.new
     @item.assign_attributes resource.default_values
+    check_modify_permissions
   end
 
   def permission_params
@@ -87,15 +80,7 @@ module LibSupport::RefsController
 
   def update
     @item = resource.find_by_id(params[:id]) unless @item
-
-    unless @item && permit_modify_object?(@item)
-      respond_to do |format|
-        format.json { render nothing: true, status: :forbidden }
-        format.html { redirect_to(:action => 'index') }
-      end
-
-      return
-    end
+    return unless check_modify_permissions
 
     after_change 'show', update_resource(resource_params)
   end
@@ -124,6 +109,19 @@ module LibSupport::RefsController
         end
       end
     end
+  end
+
+  def check_modify_permissions
+    unless permit_modify_object?(@item)
+      respond_to do |format|
+        format.json { render nothing: true, status: :forbidden }
+        format.html { redirect_to(:action => 'index') }
+      end
+
+      return false
+    end
+
+    true
   end
 
   def create_resource(params)
