@@ -50,6 +50,7 @@ module LibSupport::BaseObject
 
     def set_id_column(value)
       @id_column = value
+      self.primary_key = value
     end
 
     def set_ref_columns(*list)
