@@ -93,6 +93,10 @@ module LibSupport::RefsController
     after_change 'show', update_resource(resource_params)
   end
 
+  def url_scope
+    ref_options[:url_scope]
+  end
+
   protected
 
   def action_after_change

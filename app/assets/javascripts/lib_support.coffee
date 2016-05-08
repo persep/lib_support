@@ -73,7 +73,10 @@ class @LibSupport
     return;
 
   refreshTable: (table) ->
-    $.ajax "/#{table.data('type-plural')}/index_items",
+    url = "/#{table.data('type-plural')}/index_items";
+    url = table.data('scope') + url if table.data('scope');
+    
+    $.ajax url,
       type: 'get'
       error: @showErrorStatus;
 
