@@ -1,9 +1,22 @@
 class ActionDispatch::Routing::Mapper
-  REF_ACTIONS = [:index, :show, :update, :new, :create, :remove, :index_items].freeze
+  REF_ACTIONS = [:index, :show, :update, :new, :create, :remove, :index_items]
 
   class RefResource < Resource
+    def initialize(entities, api_only, shallow, options = {})
+      super
+
+      klass = resource_controller_class
+      @param = klass.id_column if klass.respond_to?(:id_column)
+    end
+
     def default_actions
-      REF_ACTIONS.dup
+      REF_ACTIONS
+    end
+
+    protected
+
+    def resource_controller_class
+      "#{@controller.to_s.camelize}Controller".constantize
     end
   end
 
