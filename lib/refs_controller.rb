@@ -144,7 +144,7 @@ module LibSupport::RefsController
 
     base.resource = ActiveRecord::Base
     base.ref_options = {}
-    base.before_action({:only => [:show, :update]}, :find_item_from_params)
+    base.before_action :find_item_from_params, :only => [:show, :update]
   end
 
   def find_item_from_params
