@@ -74,8 +74,6 @@ module LibSupport::RefsController
   end
 
   def show
-    find_item_from_params
-
     respond_to do |format|
       format.js do
         render body: nil, status: :not_found and return unless @item && @item.permit?(permission_params)
@@ -87,9 +85,7 @@ module LibSupport::RefsController
   end
 
   def update
-    find_item_from_params unless @item
     return unless check_modify_permissions
-
     after_change 'show', update_resource(resource_params)
   end
 
@@ -148,6 +144,7 @@ module LibSupport::RefsController
 
     base.resource = ActiveRecord::Base
     base.ref_options = {}
+    base.before_action({:only => [:show, :update]}, :find_item_from_params)
   end
 
   def find_item_from_params
