@@ -1,7 +1,7 @@
 - model = controller.resource.sm_name.to_s
 %tr{'data-id' => item.get_id, 'data-type' => model}
   %td
-    %input{:type => 'checkbox'}/
+    %input{:type => 'checkbox'}
   - controller.resource.ref_columns.each do |col|
     %td= item.ref_column_value col
   %td.mx-ref-buttons
