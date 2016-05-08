@@ -78,7 +78,7 @@ module LibSupport::RefsController
 
     respond_to do |format|
       format.js do
-        render nothing: true, status: :not_found and return unless @item && @item.permit?(permission_params)
+        render body: nil, status: :not_found and return unless @item && @item.permit?(permission_params)
         render json: @item
       end
 
@@ -126,7 +126,7 @@ module LibSupport::RefsController
   def check_modify_permissions
     unless permit_modify_object?(@item)
       respond_to do |format|
-        format.json { render nothing: true, status: :forbidden }
+        format.json { render body: nil, status: :forbidden }
         format.html { redirect_to(:action => 'index') }
       end
 

@@ -74,7 +74,7 @@ class @LibSupport
 
   refreshTable: (table) ->
     url = "/#{table.data('type-plural')}/index_items";
-    url = table.data('scope') + url if table.data('scope');
+    url = table.data('url-scope') + url if table.data('url-scope');
     
     $.ajax url,
       type: 'get'
