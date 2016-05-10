@@ -34,7 +34,7 @@ module ActiveRecord
           obj_name = options[:objects] || 'objects'
           indexed_columns = options[:indexed_columns]
 
-          create_table(table_name, options.merge(:primary_key => :id, :id => false, :options => "inherits (#{options[:inherits] || obj_name.to_s})"), &block)
+          create_table(table_name, options.merge(:primary_key => options[:id] || :id, :id => false, :options => "inherits (#{options[:inherits] || obj_name.to_s})"), &block)
 
           add_index table_name, :txt_index, using: :gin
           add_index table_name, :type
