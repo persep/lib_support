@@ -16,11 +16,11 @@ module ActiveRecord
           end
 
           execute <<-SQL
-            ALTER TABLE #{table_name.to_s}
-              ALTER COLUMN id SET DEFAULT nextval('#{table_name.to_s}_id_seq');
-            ALTER TABLE #{table_name.to_s}
+            ALTER TABLE #{table_name}
+              ALTER COLUMN id SET DEFAULT nextval('#{table_name}_id_seq');
+            ALTER TABLE #{table_name}
               ALTER COLUMN updated_at SET DEFAULT now() at time zone 'UTC';
-            ALTER TABLE #{table_name.to_s}
+            ALTER TABLE #{table_name}
               ALTER COLUMN created_at SET DEFAULT now() at time zone 'UTC';
           SQL
 
@@ -41,7 +41,7 @@ module ActiveRecord
 
           execute <<-SQL
             ALTER TABLE #{table_name}
-              ADD PRIMARY KEY (id);
+              ADD PRIMARY KEY (#{options[:id] || :id});
             ALTER TABLE #{table_name}
               ALTER COLUMN type SET DEFAULT '#{table_name.camelize.singularize}';
           SQL
@@ -74,7 +74,7 @@ CREATE TRIGGER #{table_name}_tbiu
         def object_table_drop(table_name = :objects)
           drop_table table_name
           execute <<-SQL
-            drop sequence #{table_name.to_s}_id_seq;
+            drop sequence #{table_name}_id_seq;
           SQL
         end
 
