@@ -51,7 +51,7 @@ module LibSupport::RefsController
   end
 
   def ref_action?(action)
-    ref_actions.include?(action)
+    self.class.ref_actions.include?(action)
   end
 
   def remove
