@@ -2,7 +2,14 @@
 = render partial: 'index_buttons', :locals => { :name => name }
 .row
   .col-md-12
-    %div{'data-role' => 'paginator', 'data-type' => name, :id => "#{name}_list_paginator"}
+    .input-group
+      %input.form-control{:type => :text, :placeholder => t('lib_support.refs.search'), :'data-action' => :search, :'data-type' => name}
+      %span.input-group-btn
+        %button.btn.btn-primary{:type => 'button'}
+          %i.fa.fa-search
+.row
+  .col-md-12
+    %div{:'data-role' => 'paginator', :'data-type' => name, :id => "#{name}_list_paginator"}
 .row
   .col-md-12
     %table.table.table-hover.lib-support-list{'data-role' => 'list', 'data-type' => name, 'data-url-scope' => controller.url_scope(:index_items), 'data-type-plural' => "#{controller.resource.pl_name}", :id => "#{name}_list"}

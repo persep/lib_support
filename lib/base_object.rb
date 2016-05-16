@@ -12,8 +12,16 @@ module LibSupport::BaseObject
       text = txt.to_s.strip.gsub('$', '')
       return where('') if text.empty?
 
-      res = where("#{table_name}.txt_index @@ plainto_tsquery(unaccent($$#{text}$$))").order("ts_rank(#{table_name}.txt_index, plainto_tsquery($$#{text}$$)) desc")
-      res = res.order("#{table_name}.name <-> $$#{text}$$") if column_names.include?('name')
+      options = {
+          :include_like => false,
+          :has_name => column_names.include?('name')
+      }.merge opts.extract_options!.dup
+
+      txt = "#{table_name}.txt_index @@ plainto_tsquery(unaccent($$#{text}$$))"
+      txt << " or #{table_name}.name like $$#{txt}$$" if options[:include_like] && options[:has_name]
+
+      res = where(txt).order("ts_rank(#{table_name}.txt_index, plainto_tsquery($$#{text}$$)) desc")
+      res = res.order("#{table_name}.name <-> $$#{text}$$") if options[:has_name]
 
       res
     end
