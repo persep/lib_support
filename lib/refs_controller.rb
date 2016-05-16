@@ -1,7 +1,7 @@
 module LibSupport::RefsController
   module ClassMethods
     def ref_actions
-      self.ref_options[:ref_actions] || {}
+      self.ref_options[:ref_actions] || ActionDispatch::Routing::Mapper::REF_ACTIONS
     end
 
     def ref_options_set(val)
@@ -51,8 +51,7 @@ module LibSupport::RefsController
   end
 
   def ref_action?(action)
-    list = ref_options[:ref_actions] || ActionDispatch::Routing::Mapper::REF_ACTIONS
-    list.include?(action)
+    ref_actions.include?(action)
   end
 
   def remove
