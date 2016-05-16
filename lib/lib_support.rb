@@ -15,11 +15,9 @@ require 'refs_controller'
 require 'base_object'
 require 'generators/refs_controller/refs_controller_generator'
 require 'engine'
-require 'active_record/relation/query_methods'
-require 'active_record/querying'
-require 'active_record/relation'
 
 module ActiveRecord
+=begin
   module QueryMethods
     # full text search
     def find_objects(txt, *opts)
@@ -32,8 +30,9 @@ module ActiveRecord
       res
     end
   end
+=end
 
   module Querying
-    delegate :find_objects, to: :all
+    #delegate :find_objects, to: :all
   end
 end
