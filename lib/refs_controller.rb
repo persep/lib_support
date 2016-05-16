@@ -37,7 +37,7 @@ module LibSupport::RefsController
     @page = params[:page].to_i
     @page = 1 if @page < 1
 
-    options = ref_options[:search_options]
+    options = ref_options[:search_options] || {}
     options[:include_like] ||= true
 
     @items = resource.permitted_for(permission_params)
