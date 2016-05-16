@@ -8,7 +8,7 @@ module LibSupport::BaseObject
     end
 
     # full text search
-    def find_object(txt, *opts)
+    def find_objects(txt, *opts)
       text = txt.strip.gsub('$', '')
 
       res = permitted_for(*opts).where("#{table_name}.txt_index @@ plainto_tsquery(unaccent($$#{text}$$))").order("ts_rank(#{table_name}.txt_index, plainto_tsquery($$#{text}$$)) desc")
