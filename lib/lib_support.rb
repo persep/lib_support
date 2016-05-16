@@ -15,24 +15,5 @@ require 'refs_controller'
 require 'base_object'
 require 'generators/refs_controller/refs_controller_generator'
 require 'engine'
-
-module ActiveRecord
-=begin
-  module QueryMethods
-    # full text search
-    def find_objects(txt, *opts)
-      text = txt.to_s.strip.gsub('$', '')
-      return self if text.empty?
-
-      res = where("#{table_name}.txt_index @@ plainto_tsquery(unaccent($$#{text}$$))").order("ts_rank(#{table_name}.txt_index, plainto_tsquery($$#{text}$$)) desc")
-      res = res.order("#{table_name}.name <-> $$#{text}$$") if column_names.include?('name')
-
-      res
-    end
-  end
-=end
-
-  module Querying
-    #delegate :find_objects, to: :all
-  end
-end
+require 'active_record/querying'
+require 'active_record/query_methods'
