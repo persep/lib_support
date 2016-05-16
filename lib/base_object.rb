@@ -9,7 +9,7 @@ module LibSupport::BaseObject
 
     # full text search
     def find_object(txt, *opts)
-      text = txt.strip
+      text = txt.strip.gsub('$', '')
 
       res = permitted_for(*opts).where("#{table_name}.txt_index @@ plainto_tsquery(unaccent($$#{text}$$))").order("ts_rank(#{table_name}.txt_index, plainto_tsquery($$#{text}$$)) desc")
       res = res.order("#{table_name}.name <-> $$#{text}$$") if column_names.include?('name')

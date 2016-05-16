@@ -1,0 +1,4 @@
+class BaseObject < ActiveRecord::Base
+  self.table_name = 'objects'
+  include LibSupport::BaseObject
+end
