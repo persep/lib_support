@@ -2,12 +2,6 @@ class ActionDispatch::Routing::Mapper
   REF_ACTIONS = [:index, :show, :update, :new, :create, :remove, :index_items]
 
   class RefResource < Resource
-    def actions
-      klass = resource_controller_class
-
-      super.delete_if {|k| !(klass.ref_options[:ref_actions] || REF_ACTIONS).include?(k) }
-    end
-
     def initialize(entities, api_only, shallow, options = {})
       super
 
