@@ -1,9 +1,5 @@
 module LibSupport::RefsController
   module ClassMethods
-    def ref_actions
-      self.ref_options[:ref_actions] || ActionDispatch::Routing::Mapper::REF_ACTIONS
-    end
-
     def ref_options_set(val)
       self.ref_options = self.ref_options.merge(val)
     end
@@ -51,7 +47,7 @@ module LibSupport::RefsController
   end
 
   def ref_action?(action)
-    self.class.ref_actions.include?(action)
+    (ref_options[:ref_actions] || ActionDispatch::Routing::Mapper::REF_ACTIONS).include?(action)
   end
 
   def remove

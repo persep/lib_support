@@ -5,7 +5,7 @@ class ActionDispatch::Routing::Mapper
     def actions
       klass = resource_controller_class
 
-      super.delete_if {|k| !klass.ref_actions.include?(k) }
+      super.delete_if {|k| !(klass.ref_options[:ref_actions] || REF_ACTIONS).include?(k) }
     end
 
     def initialize(entities, api_only, shallow, options = {})
