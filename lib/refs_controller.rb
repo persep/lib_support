@@ -1,5 +1,9 @@
 module LibSupport::RefsController
   module ClassMethods
+    def ref_actions
+      self.ref_options[:ref_actions] || {}
+    end
+
     def ref_options_set(val)
       self.ref_options = self.ref_options.merge(val)
     end
