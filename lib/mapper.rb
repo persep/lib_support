@@ -10,7 +10,7 @@ class ActionDispatch::Routing::Mapper
     end
 
     def default_actions
-      REF_ACTIONS
+      resource_controller_class.ref_actions
     end
 
     protected
