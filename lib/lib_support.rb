@@ -15,6 +15,9 @@ require 'refs_controller'
 require 'base_object'
 require 'generators/refs_controller/refs_controller_generator'
 require 'engine'
+require 'active_record/relation/query_methods'
+require 'active_record/querying'
+require 'active_record/relation'
 
 module ActiveRecord
   module QueryMethods
