@@ -18,7 +18,7 @@ module LibSupport::BaseObject
       }.merge opts.extract_options!.dup
 
       txt = "#{table_name}.txt_index @@ plainto_tsquery(unaccent($$#{text}$$))"
-      txt << " or #{table_name}.name like $$#{txt}$$" if options[:include_like] && options[:has_name]
+      txt << " or #{table_name}.name like $$#{text}$$" if options[:include_like] && options[:has_name]
 
       res = where(txt).order("ts_rank(#{table_name}.txt_index, plainto_tsquery($$#{text}$$)) desc")
       res = res.order("#{table_name}.name <-> $$#{text}$$") if options[:has_name]
