@@ -1,3 +1,4 @@
+require 'active_record'
 require 'array'
 require 'array_hash_serializer'
 require 'array_symbol_serializer'

@@ -37,7 +37,9 @@ module LibSupport::RefsController
     @page = params[:page].to_i
     @page = 1 if @page < 1
 
-    @items = resource.permitted_for(permission_params).order("#{resource.table_name}.#{id_column.to_s} desc").page(@page)
+    @items = resource.permitted_for(permission_params)
+                 .find_objects(params[:text], :include_like => true)
+                 .order("#{resource.table_name}.#{id_column.to_s} desc").page(@page)
   end
 
   def new
