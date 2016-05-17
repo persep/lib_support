@@ -40,7 +40,7 @@ class @LibSupport
   prepareIndexLists: ->
     tables = $('.lib-support-list[data-role="list"]');
     tables.data('obj', @);
-    $("input[data-action=\"search\"][data-type]:first").focus();
+    $("input[data-action=\"search\"][data-type]:first").focus().select();
 
     tables.each ->
       obj = $(@).data('obj');
