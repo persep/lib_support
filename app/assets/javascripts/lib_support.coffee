@@ -96,10 +96,13 @@ class @LibSupport
     url = "/#{table.data('type-plural')}/index_items";
     url = table.data('url-scope') + url if table.data('url-scope');
 
+    data = {};
+    text = $.trim $("input[data-action=\"search\"][data-type=\"#{table.data('type')}\"]").val();
+    data.text = text unless text.length == 0;
+
     $.ajax url,
       type: 'get'
-      data:
-        text: $("input[data-action=\"search\"][data-type=\"#{table.data('type')}\"]").val()
+      data: data
       error: @showErrorStatus;
 
     return;
