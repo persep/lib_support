@@ -9,19 +9,19 @@ module LibSupport::BaseObject
 
     # full text search
     def find_objects(txt, *opts)
-      text = txt.to_s.strip.gsub('$', '')
-      return where('') if text.empty?
+      txt.replace txt.to_s.strip.gsub('$', '')
+      return where('') if txt.empty?
 
       options = {
           :include_like => false,
           :has_name => column_names.include?('name')
       }.merge opts.extract_options!.dup
 
-      txt = "#{table_name}.txt_index @@ plainto_tsquery(unaccent($$#{text}$$))"
-      txt << " or lower(#{table_name}.name) like $$%#{text}%$$" if options[:include_like] && options[:has_name]
+      q = "#{table_name}.txt_index @@ plainto_tsquery(unaccent($$#{txt}$$))"
+      q << " or lower(#{table_name}.name) like $$%#{txt}%$$" if options[:include_like] && options[:has_name]
 
-      res = where(txt).order("ts_rank(#{table_name}.txt_index, plainto_tsquery($$#{text}$$)) desc")
-      res = res.order("#{table_name}.name <-> $$#{text}$$") if options[:has_name]
+      res = where(q).order("ts_rank(#{table_name}.txt_index, plainto_tsquery($$#{txt}$$)) desc")
+      res = res.order("#{table_name}.name <-> $$#{txt}$$") if options[:has_name]
 
       res
     end

@@ -1,4 +1,6 @@
 class @LibSupport
+  $timer = null;
+  
   checkRemoveButton: (type) ->
     btn = $("[data-type=\"#{type}\"][data-action=\"remove\"]");
     table = @findTable(type);
@@ -42,8 +44,9 @@ class @LibSupport
 
     tables.each ->
       obj = $(@).data('obj');
+      type = $(@).data('type');
 
-      $("[data-type=\"#{$(@).data('type')}\"][data-action=\"remove\"]")
+      $("[data-type=\"#{type}\"][data-action=\"remove\"]")
           .data('obj', obj)
           .click ->
             obj = $(@).data('obj');
@@ -69,6 +72,22 @@ class @LibSupport
           obj.checkRemoveButton $(@).data('type');
           return;
 
+      $("input[data-action=\"search\"][data-type=\"#{type}\"]")
+          .data('obj', obj)
+          .data('table', $(@))
+          .keyup ->
+            clearTimeout $timer if $timer;
+            
+            $timer = setTimeout( ( ->
+              clearTimeout $timer;
+              $timer = null;
+              obj = $(@).data('obj');
+              obj.refreshTable $(@).data('table');
+              return;
+            ).bind(@), 200);
+        
+            return;
+
       return;
 
     return;
@@ -76,9 +95,11 @@ class @LibSupport
   refreshTable: (table) ->
     url = "/#{table.data('type-plural')}/index_items";
     url = table.data('url-scope') + url if table.data('url-scope');
-    
+
     $.ajax url,
       type: 'get'
+      data:
+        text: $("input[data-action=\"search\"][data-type=\"#{table.data('type')}\"]").val()
       error: @showErrorStatus;
 
     return;
