@@ -17,7 +17,9 @@ class @LibSupport
 
     paginator.html(paginator_html);
     table.find('.mx-selector-th input[type="checkbox"]').prop('checked', false);
-    table.find('tbody').html(items_html);
+    bd = table.find('tbody');
+    bd = table unless bd.length > 0; 
+    bd.html(items_html);
 
     $('tr td:first-child input[type="checkbox"]', table)
         .data('type', type)
