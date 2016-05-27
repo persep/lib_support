@@ -1,3 +1,3 @@
 module LibSupport
-  VERSION = '0.2.78'
+  VERSION = '0.2.79'
 end

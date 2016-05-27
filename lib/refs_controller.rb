@@ -83,6 +83,8 @@ module LibSupport::RefsController
   end
 
   def show
+    @item = find_item_from_params
+
     respond_to do |format|
       format.js do
         render body: nil, status: :not_found and return unless @item && @item.permit?(permission_params)
@@ -94,6 +96,8 @@ module LibSupport::RefsController
   end
 
   def update
+    @item = find_item_from_params
+
     return unless check_modify_permissions
     after_change 'show', update_resource(resource_params)
   end
@@ -153,11 +157,10 @@ module LibSupport::RefsController
 
     base.resource = ActiveRecord::Base
     base.ref_options = {}
-    base.before_action :find_item_from_params, :only => [:show, :update]
   end
 
   def find_item_from_params
-    @item = resource.find_by(id_column => params[id_column])
+    resource.find_by(id_column => params[id_column])
   end
 
   def permit_modify_object?(obj)
