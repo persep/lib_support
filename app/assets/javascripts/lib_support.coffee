@@ -101,6 +101,7 @@ class @LibSupport
     data = {}
     text = $.trim $("input[data-action=\"search\"][data-type=\"#{table.data('type')}\"]").val()
     data.text = text unless text.length == 0
+    table.trigger('lib_support:index_items_params', data)
 
     $.ajax url,
       type: 'get'
