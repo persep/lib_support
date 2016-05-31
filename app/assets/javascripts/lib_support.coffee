@@ -11,15 +11,18 @@ class @LibSupport
   findTable: (type) ->
     $(".lib-support-list[data-role=\"list\"][data-type=\"#{type}\"]")
 
-  indexList: (type, items_html, paginator_html) ->
+  indexList: (type, items_html, paginator_html, clear_body = true) ->
     table = @findTable(type)
+    
     paginator = $("[data-type=\"#{type}\"][data-role=\"paginator\"]")
-
     paginator.html(paginator_html)
+
     table.find('.mx-selector-th input[type="checkbox"]').prop('checked', false)
     bd = table.find('tbody')
     bd = table unless bd.length > 0
-    bd.html(items_html)
+
+    bd.empty() if clear_body
+    bd.append items_html
 
     $('tr td:first-child input[type="checkbox"]', table)
         .data('type', type)
