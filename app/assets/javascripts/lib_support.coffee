@@ -61,7 +61,7 @@ class @LibSupport
             ids = ( $('tr td:first-child input[type="checkbox"]:checked', table).map ->
                          {
                            id: $(@).closest('tr').data('id'),
-                           name: $(@).closest('tr').find('td:first').next().text()
+                           name: $(@).closest('tr').find('td[data-column-name="name"]').text()
                          }
             ).toArray()
 
