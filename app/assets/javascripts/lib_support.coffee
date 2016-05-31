@@ -24,16 +24,18 @@ class @LibSupport
     bd.empty() if clear_body
     bd.append items_html
 
-    $('tr td:first-child input[type="checkbox"]', table)
+    $('tr td:first-child input[type="checkbox"]:not([data-ready])', table)
         .data('type', type)
         .data('obj', table.data('obj'))
+        .attr('data-ready', true)
         .change ->
           obj = $(@).data('obj')
           obj.checkRemoveButton $(@).data('type')
           return
 
-    $("tr td [data-type=\"#{type}\"][data-action=\"remove_single\"]", table)
+    $("tr td [data-type=\"#{type}\"][data-action=\"remove_single\"]:not([data-ready])", table)
       .data('obj', table.data('obj'))
+      .attr('data-ready', true)
       .click ->
          obj = $(@).data('obj')
          obj.removeList $(@).data('type'), [ { id: $(@).data('id'), name: $(@).closest('tr').find('td:first').next().text() }]
