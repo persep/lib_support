@@ -38,7 +38,7 @@ class @LibSupport
       .attr('data-ready', true)
       .click ->
          obj = $(@).data('obj')
-         obj.removeList $(@).data('type'), [ { id: $(@).data('id'), name: $(@).closest('tr').find('td:first').next().text() }]
+         obj.removeList $(@).data('type'), [ { id: $(@).data('id'), name: $(@).closest('tr').find('td[data-column-name="name"]').text() }]
          false
 
     @checkRemoveButton(type)
