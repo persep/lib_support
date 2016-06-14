@@ -8,7 +8,7 @@ class Object
   end
 
   def to_bool
-    ActiveRecord::Type::Boolean.new.type_cast_from_user(to_s) unless is_bool?
+    ActiveRecord::Type::Boolean.new.cast(to_s) unless is_bool?
   end
 
   def with(*args, &block)
